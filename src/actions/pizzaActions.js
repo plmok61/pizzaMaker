@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function fetchPizzas () {
   return function (dispatch) {
-    axios.get('https://core-graphql.dev.waldo.photos/pizza?query={pizzaSizes{name,maxToppings,toppings{defaultSelected},basePrice}}',
+    axios.get('https://core-graphql.dev.waldo.photos/pizza?query={pizzaSizes{name,maxToppings,basePrice,toppings{,defaultSelected,topping{name,price}}}}',
       {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         withCredentials: false
