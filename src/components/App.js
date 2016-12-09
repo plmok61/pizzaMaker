@@ -5,6 +5,7 @@ import Pizza from './Pizza'
 
 import { connect } from 'react-redux'
 import { fetchPizzas } from '../actions/pizzaActions'
+import { addToCart } from '../actions/cartActions'
 
 
 class App extends Component {
@@ -12,6 +13,11 @@ class App extends Component {
   fetchPizzas () {
     this.props.dispatch(fetchPizzas())
   }
+
+  addToCart () {
+    this.props.dispatch(addToCart())
+  }
+
 
   render () {
   
@@ -44,7 +50,7 @@ class App extends Component {
 
 const AppContainer = connect((store) => {
   return {
-    pizzas: store.pizzas
+    pizzas: store.pizzas.pizzas
   }
 })(App)
 
