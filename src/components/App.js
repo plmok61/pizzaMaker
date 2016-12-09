@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from '../logo.svg'
 import '../App.css'
+import Pizza from './Pizza'
 
 import { connect } from 'react-redux'
 import { fetchPizzas } from '../actions/pizzaActions'
@@ -26,7 +27,15 @@ class App extends Component {
 
           <button onClick={this.fetchPizzas.bind(this)}>Start Order</button> :
 
-          this.props.pizzas.map(pizza => <div>{pizza.name}</div>)
+          this.props.pizzas.map((pizza, key) => (
+            <Pizza 
+              size={pizza.name}
+              toppings={pizza.toppings}
+              maxToppings={pizza.maxToppings}
+              basePrice={pizza.basePrice}
+              key={key}
+            />
+          ))
         }
       </div>
     )
