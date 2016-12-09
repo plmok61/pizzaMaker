@@ -14,8 +14,9 @@ class App extends Component {
     this.props.dispatch(fetchPizzas())
   }
 
-  addToCart () {
-    this.props.dispatch(addToCart())
+  addToCart (pizza) {
+    console.log('pizza: ',pizza)
+    this.props.dispatch(addToCart(pizza))
   }
 
 
@@ -40,6 +41,7 @@ class App extends Component {
               maxToppings={pizza.maxToppings}
               basePrice={pizza.basePrice}
               key={key}
+              addToCart={this.addToCart.bind(this)}
             />
           ))
         }
