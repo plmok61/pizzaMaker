@@ -1,5 +1,5 @@
 const pizzaState = {
-  pizzas: false,
+  pizza: false,
   fetching: false,
   fetched: false,
   error: null,
@@ -7,18 +7,18 @@ const pizzaState = {
 
 export default function reducer (state=pizzaState, action) {
   switch(action.type) {
-    case "FETCH_PIZZAS" : {
+    case "FETCH_PIZZA" : {
       return {...state, fetching: true,}
     }
-    case "FETCH_PIZZAS_REJECTED" : {
+    case "FETCH_PIZZA_REJECTED" : {
       return {...state, fetching: false, error: action.payload}
     }
-    case "FETCH_PIZZAS_FULFILLED" : {
+    case "FETCH_PIZZA_FULFILLED" : {
       return {
         ...state,
         fetching: false,
         fetched: true,
-        pizzas: action.payload,
+        pizza: action.payload,
       }
     }
   }
