@@ -13,6 +13,8 @@ class App extends Component {
   constructor() {
     super()
     this.fetchPizzas = this.fetchPizzas.bind(this)
+    this.toggleTopping = this.toggleTopping.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
 
   fetchPizzas (size) {
@@ -24,8 +26,9 @@ class App extends Component {
     this.props.dispatch(addToCart(pizza))
   }
 
-  toggleTopping () {
-    this.props.dispatch(toggleTopping())
+  toggleTopping (selected) {
+    console.log('selected? ',selected)
+    this.props.dispatch(toggleTopping(selected))
   }
 
   render () {
@@ -51,7 +54,8 @@ class App extends Component {
             toppings={this.props.pizzas.toppings}
             maxToppings={this.props.pizzas.maxToppings}
             basePrice={this.props.pizzas.basePrice}
-            addToCart={this.addToCart.bind(this)}
+            addToCart={this.addToCart}
+            toggleTopping={this.toggleTopping}
           />
         }
       </div>

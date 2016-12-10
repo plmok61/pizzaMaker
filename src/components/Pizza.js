@@ -2,7 +2,7 @@ import React from 'react'
 import '../App.css'
 import Topping from './Topping'
 
-const Pizza = ({ size, toppings, maxToppings, basePrice, addToCart }) => (
+const Pizza = ({ size, toppings, maxToppings, basePrice, addToCart, toggleTopping }) => (
   <div className='pizzaWrap'>
     <h3>Size: {size}</h3>
     <h3>Max Toppings: {maxToppings || 'Unlimited!'}</h3>
@@ -13,6 +13,7 @@ const Pizza = ({ size, toppings, maxToppings, basePrice, addToCart }) => (
           key={key}
           topping={t.topping}
           selected={t.defaultSelected}
+          toggleTopping={toggleTopping}
         />
       ))
     }

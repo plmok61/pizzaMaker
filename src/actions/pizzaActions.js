@@ -11,7 +11,7 @@ export function fetchPizzas (size) {
         withCredentials: false
       })
       .then((response) => {
-        console.log('~~~~~~~~',response)
+        console.log(response)
         dispatch({type: 'FETCH_PIZZAS_FULFILLED', payload: response.data.data.pizzaSizeByName})
       })
       .catch((error) => {
