@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import '../App.css'
+import axios from 'axios'
 import Pizza from './Pizza'
 import OrderTotal from './OrderTotal'
 import Cart from './Cart'
+import SizeButtons from './SizeButtons'
 
 import { connect } from 'react-redux'
 import { fetchPizza } from '../actions/pizzaActions'
@@ -16,12 +18,33 @@ class App extends Component {
     this.state = {
       cart: [],
       total: 0,
+      sizes: [],
     }
     this.fetchPizza = this.fetchPizza.bind(this)
     //this.toggleTopping = this.toggleTopping.bind(this)
     this.addToCart = this.addToCart.bind(this)
     this.removeFromCart = this.removeFromCart.bind(this)
+    this.fetchSizes = this.fetchSizes.bind(this)
   }
+
+  componentDidMount () {
+    this.fetchSizes()
+  }
+
+  fetchSizes () {
+    axios.get(`https://core-graphql.dev.waldo.photos/pizza?query={pizzaSizes{name}}`,
+      {
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        withCredentials: false
+      })
+      .then((response) => {
+        let sizes = response.data.data.pizzaSizes.map((size) => size.name)
+        this.setState({sizes: sizes})
+      })
+      .catch((error) => {
+        console.log('Error getting pizza: ', error)
+      })
+  }  
 
   fetchPizza (size) {
     this.props.dispatch(fetchPizza(size))
@@ -71,11 +94,10 @@ class App extends Component {
           <h2>Pizza Time</h2>
         </div>
         <OrderTotal total={this.state.total}/>
-        <div>
-          <button onClick={() => this.fetchPizza("small")}>Small</button>
-          <button onClick={() => this.fetchPizza("medium")}>Medium</button>
-          <button onClick={() => this.fetchPizza("large")}>Large</button>
-        </div>
+        <SizeButtons 
+          sizes={this.state.sizes}
+          fetchPizza={this.fetchPizza}
+        />
         {
           !this.props.pizza
           ?
