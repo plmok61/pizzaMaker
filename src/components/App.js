@@ -10,9 +10,13 @@ import { toggleTopping } from '../actions/toppingsActions'
 
 
 class App extends Component {
+  constructor() {
+    super()
+    this.fetchPizzas = this.fetchPizzas.bind(this)
+  }
 
-  fetchPizzas () {
-    this.props.dispatch(fetchPizzas())
+  fetchPizzas (size) {
+    this.props.dispatch(fetchPizzas(size))
   }
 
   addToCart (pizza) {
@@ -34,20 +38,21 @@ class App extends Component {
         </div>
         
         {
-          !this.props.pizzas.length ?
-
-          <button onClick={this.fetchPizzas.bind(this)}>Start Order</button> :
-
-          this.props.pizzas.map((pizza, key) => (
-            <Pizza 
-              size={pizza.name}
-              toppings={pizza.toppings}
-              maxToppings={pizza.maxToppings}
-              basePrice={pizza.basePrice}
-              key={key}
-              addToCart={this.addToCart.bind(this)}
-            />
-          ))
+          !this.props.pizzas
+          ?
+          <div>
+            <button onClick={() => this.fetchPizzas("small")}>Small</button>
+            <button onClick={() => this.fetchPizzas("medium")}>Medium</button>
+            <button onClick={() => this.fetchPizzas("large")}>Large</button>
+          </div>
+          :
+          <Pizza 
+            size={this.props.pizzas.name}
+            toppings={this.props.pizzas.toppings}
+            maxToppings={this.props.pizzas.maxToppings}
+            basePrice={this.props.pizzas.basePrice}
+            addToCart={this.addToCart.bind(this)}
+          />
         }
       </div>
     )

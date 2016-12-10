@@ -1,14 +1,8 @@
 const pizzaState = {
-  pizzas: [],
+  pizzas: false,
   fetching: false,
   fetched: false,
   error: null,
-  currentPizza: {
-    size: null,
-    maxToppings: null,
-    toppings: [],
-    price: null,
-  },
 }
 
 export default function reducer (state=pizzaState, action) {

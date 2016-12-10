@@ -1,15 +1,18 @@
 import axios from 'axios'
 
-export function fetchPizzas () {
+// Query to get all pizzas
+// {pizzaSizes{name,maxToppings,basePrice,toppings{,defaultSelected,topping{name,price}}}}
+
+export function fetchPizzas (size) {
   return function (dispatch) {
-    axios.get('https://core-graphql.dev.waldo.photos/pizza?query={pizzaSizes{name,maxToppings,basePrice,toppings{,defaultSelected,topping{name,price}}}}',
+    axios.get(`https://core-graphql.dev.waldo.photos/pizza?query={pizzaSizeByName(name:"${size}"){name,maxToppings,basePrice,toppings{defaultSelected,topping{name,price}}}}`,
       {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         withCredentials: false
       })
       .then((response) => {
-        console.log(response)
-        dispatch({type: 'FETCH_PIZZAS_FULFILLED', payload: response.data.data.pizzaSizes})
+        console.log('~~~~~~~~',response)
+        dispatch({type: 'FETCH_PIZZAS_FULFILLED', payload: response.data.data.pizzaSizeByName})
       })
       .catch((error) => {
         console.log('Error getting pizza: ', error)
@@ -17,3 +20,4 @@ export function fetchPizzas () {
       })
   }
 }
+
