@@ -11,36 +11,59 @@ export default class Pizza extends Component {
       pizzaTotal: 0,
     }
     this.countToppings = this.countToppings.bind(this)
+    this.toggleTopping = this.toggleTopping.bind(this)
+    this.calcPizzaPrice = this.calcPizzaPrice.bind(this)
   }
 
   componentDidMount () {
+    this.calcPizzaPrice(this.props.toppings)
+
+    // Set initial topping count
+    this.countToppings(this.props.toppings)
+  }
+
+  calcPizzaPrice (toppings) {
     //Add up the cost of the default toppings
-    const total = this.props.toppings.reduce((acc, t) => {
+    const total = toppings.reduce((acc, t) => {
       if (t.defaultSelected) {
         acc = acc + t.topping.price
       }
       return acc
     },0)
-    console.log('total: ',total)
-
-    // Set our initial topping count
-    this.countToppings(this.props.toppings)
-
+    // Set initial pizza total
     this.setState({pizzaTotal: total + this.props.basePrice})
   }
 
   countToppings (toppings) {
-    const toppingCount = toppings.reduce((acc,t) => {
+    const toppingsCount = toppings.reduce((acc,t) => {
       if (t.defaultSelected) {
         acc = acc++
       }
       return acc
     },0)
-    this.setState({toppingCount: toppingCount})
+    this.setState({toppingsCount: toppingsCount})
   }
 
-  toggleTopping (selector) {
+  // Finds the index of the topping by its name
+  toggleTopping (name) {
+    let toppings = this.state.toppings
+    let index = -1
 
+    for (var i = 0; i < toppings.length; i++) {
+      if(toppings[i].topping.name === name) {
+        index = i
+        break
+      }
+    }
+    //Switch its defaultSelected
+    let topping = this.state.toppings[index]
+    topping.defaultSelected = !topping.defaultSelected
+
+    //recount the toppings selected
+    this.countToppings(this.state.toppings)
+
+    //update the pice
+    this.calcPizzaPrice(this.state.toppings)
   }
 
   render () {

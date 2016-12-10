@@ -16,7 +16,7 @@ export default class Topping extends Component {
         <input 
           type='checkbox'
           checked={selected}
-          onChange={()=> toggleTopping(selected)}
+          onChange={()=> toggleTopping(topping.name)}
         />     
       </div>
     )
