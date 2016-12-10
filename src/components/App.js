@@ -6,6 +6,7 @@ import Pizza from './Pizza'
 import { connect } from 'react-redux'
 import { fetchPizzas } from '../actions/pizzaActions'
 import { addToCart } from '../actions/cartActions'
+import { toggleTopping } from '../actions/toppingsActions'
 
 
 class App extends Component {
@@ -19,6 +20,9 @@ class App extends Component {
     this.props.dispatch(addToCart(pizza))
   }
 
+  toggleTopping () {
+    this.props.dispatch(toggleTopping())
+  }
 
   render () {
   

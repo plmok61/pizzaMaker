@@ -1,11 +1,12 @@
 import React from 'react'
+import '../App.css'
 import Topping from './Topping'
 
 const Pizza = ({ size, toppings, maxToppings, basePrice, addToCart }) => (
-  <div>
-    <h3>{size}</h3>
+  <div className='pizzaWrap'>
+    <h3>Size: {size}</h3>
     <h3>Max Toppings: {maxToppings || 'Unlimited!'}</h3>
-    <h3>Pice: ${basePrice}</h3>
+    <h3>Base Pice: ${basePrice}</h3>
     {
       toppings.map((t, key) => (
         <Topping 
