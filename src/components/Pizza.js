@@ -8,6 +8,7 @@ export default class Pizza extends Component {
     this.state = {
       toppings: this.props.toppings,
       toppingsCount: 0,
+      maxToppings: this.props.maxToppings,
       pizzaTotal: 0,
     }
     this.countToppings = this.countToppings.bind(this)
@@ -30,31 +31,43 @@ export default class Pizza extends Component {
       }
       return acc
     },0)
-    // Set initial pizza total
-    this.setState({pizzaTotal: total + this.props.basePrice})
+    // Set initial pizza total and round to 2 decimal places
+    this.setState({pizzaTotal: (total + this.props.basePrice).toFixed(2)})
   }
 
   countToppings (toppings) {
     const toppingsCount = toppings.reduce((acc,t) => {
       if (t.defaultSelected) {
-        acc = acc++
+        acc++
       }
       return acc
     },0)
+
+    console.log(toppingsCount)
+
     this.setState({toppingsCount: toppingsCount})
   }
 
-  // Finds the index of the topping by its name
+  
   toggleTopping (name) {
+
     let toppings = this.state.toppings
     let index = -1
-
+    // Finds the index of the topping by its name
     for (var i = 0; i < toppings.length; i++) {
       if(toppings[i].topping.name === name) {
         index = i
         break
       }
     }
+
+    //check to make sure max toppings has not been met
+    //only allow deselecting if it has
+    if(this.state.toppingsCount === this.state.maxToppings &&
+       !this.state.toppings[index].defaultSelected) {
+      return 
+    }
+
     //Switch its defaultSelected
     let topping = this.state.toppings[index]
     topping.defaultSelected = !topping.defaultSelected

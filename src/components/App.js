@@ -14,7 +14,6 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      addForm: true,
       cart: [],
       total: 0,
     }
@@ -25,7 +24,6 @@ class App extends Component {
 
   fetchPizza (size) {
     this.props.dispatch(fetchPizza(size))
-    this.setState({addForm: false})
   }
 
   addToCart (pizza) {
@@ -38,7 +36,6 @@ class App extends Component {
     }, 0)
     this.setState({
       cart: newCart,
-      addForm: true,
       total: newTotal,
     })
     //Redux code I could not get working
