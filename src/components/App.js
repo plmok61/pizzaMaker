@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import logo from '../logo.svg'
 import '../App.css'
 import Pizza from './Pizza'
 import OrderTotal from './OrderTotal'
@@ -21,6 +20,7 @@ class App extends Component {
     this.fetchPizza = this.fetchPizza.bind(this)
     //this.toggleTopping = this.toggleTopping.bind(this)
     this.addToCart = this.addToCart.bind(this)
+    this.removeFromCart = this.removeFromCart.bind(this)
   }
 
   fetchPizza (size) {
@@ -37,10 +37,24 @@ class App extends Component {
     }, 0)
     this.setState({
       cart: newCart,
-      total: newTotal.toFixed(2),
+      total: newTotal,
     })
     //Redux code I could not get working
     //this.props.dispatch(addToCart(pizza))
+  }
+
+  removeFromCart (index) {
+    let cart = this.state.cart
+    cart.splice(index, 1)
+
+    let newTotal = cart.reduce(function(acc, item) {
+      return acc + item.price
+    }, 0)
+
+    this.setState({
+      cart: cart,
+      total: newTotal,
+    })
   }
 
   //Redux code to toggle toppings I could not get working
@@ -77,6 +91,7 @@ class App extends Component {
         }
         <Cart 
           pizzas={this.state.cart}
+          removeFromCart={this.removeFromCart}
         />
       </div>
     )

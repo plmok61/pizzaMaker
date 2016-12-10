@@ -36,8 +36,8 @@ export default class Pizza extends Component {
       }
       return acc
     },0)
-    // Set initial pizza total and round to 2 decimal places
-    this.setState({pizzaTotal: (total + this.props.basePrice).toFixed(2)})
+    // Set initial pizza total
+    this.setState({pizzaTotal: total + this.props.basePrice})
   }
 
   countToppings (toppings) {
@@ -103,7 +103,8 @@ export default class Pizza extends Component {
             />
           ))
         }
-        <button onClick={()=> addToCart({size: size, price: basePrice, toppings: this.state.toppings})}>Add to Cart</button>
+        <button onClick={()=> {
+          addToCart({size: size, price: this.state.pizzaTotal, toppings: this.state.toppings})}}>Add to Cart</button>
       </div>
     )
   }
