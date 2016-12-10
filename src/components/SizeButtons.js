@@ -5,7 +5,7 @@ const SizeButtons = ({ sizes, fetchPizza }) => (
     {
       sizes.map((size, key) => (
         <button 
-          onClick={() => this.fetchPizza(size)}
+          onClick={() => fetchPizza(size)}
           key={key}
         >
           {size}

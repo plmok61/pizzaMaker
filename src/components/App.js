@@ -46,12 +46,26 @@ class App extends Component {
       })
   }  
 
+  //The one thing in here using Redux
   fetchPizza (size) {
     this.props.dispatch(fetchPizza(size))
   }
 
   addToCart (pizza) {
-    console.log('pizza: ',pizza)
+    //Check to make sure the pizza does not have
+    //too many toppings
+    let toppingsCount = 0
+    for(var i = 0; i < pizza.toppings.length; i++) {
+      if (pizza.toppings[i].defaultSelected) {
+        toppingsCount++
+      }
+    }
+
+    if (toppingsCount > pizza.maxToppings) {
+      const toRemove = toppingsCount - pizza.maxToppings
+      return alert(`Please remove ${toRemove} topping(s)`)
+    }
+
     let newCart = this.state.cart
     newCart.push(pizza)
 

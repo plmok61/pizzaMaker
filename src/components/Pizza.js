@@ -10,16 +10,18 @@ export default class Pizza extends Component {
       toppingsCount: 0,
       maxToppings: 0,
       pizzaTotal: 0,
+      basePrice: 0,
     }
     this.countToppings = this.countToppings.bind(this)
     this.toggleTopping = this.toggleTopping.bind(this)
     this.calcPizzaPrice = this.calcPizzaPrice.bind(this)
   }
 
-  componentWillReceiveProps () {
+  componentDidMount () {
     this.setState({
       toppings: this.props.toppings,
-      maxToppings: this.props.maxToppings
+      maxToppings: this.props.maxToppings,
+      basePrice: this.props.basePrice,
     })
 
     this.calcPizzaPrice(this.props.toppings)
@@ -48,8 +50,6 @@ export default class Pizza extends Component {
       return acc
     },0)
 
-    console.log(toppingsCount)
-
     this.setState({toppingsCount: toppingsCount})
   }
 
@@ -68,8 +68,8 @@ export default class Pizza extends Component {
 
     //check to make sure max toppings has not been met
     //only allow deselecting if it has
-    if(this.state.toppingsCount === this.state.maxToppings &&
-       !this.state.toppings[index].defaultSelected) {
+    if(this.state.toppingsCount === this.props.maxToppings &&
+      !this.state.toppings[index].defaultSelected) {
       return 
     }
 
@@ -92,7 +92,8 @@ export default class Pizza extends Component {
       <div className='pizzaWrap'>
         <h3>Size: {size}</h3>
         <h3>Max Toppings: {maxToppings || 'Unlimited!'}</h3>
-        <h3>Pice: ${this.state.pizzaTotal}</h3>
+        <h3>Base Pice: ${basePrice}</h3>
+        <h3>Total: ${this.state.pizzaTotal}</h3>
         {
           this.state.toppings.map((t, key) => (
             <Topping 
@@ -103,32 +104,8 @@ export default class Pizza extends Component {
             />
           ))
         }
-        <button onClick={()=> {
-          addToCart({size: size, price: this.state.pizzaTotal, toppings: this.state.toppings})}}>Add to Cart</button>
+        <button onClick={()=> addToCart({size: size, price: this.state.pizzaTotal, maxToppings: maxToppings, toppings: this.state.toppings})}>Add to Cart</button>
       </div>
     )
   }
 } 
-
-// Code from when I tried to solve with Redux with a stateless componenet
-
-// const Pizza = ({ size, toppings, maxToppings, basePrice, addToCart, toggleTopping }) => (
-//   <div className='pizzaWrap'>
-//     <h3>Size: {size}</h3>
-//     <h3>Max Toppings: {maxToppings || 'Unlimited!'}</h3>
-//     <h3>Base Pice: ${basePrice}</h3>
-//     {
-//       toppings.map((t, key) => (
-//         <Topping 
-//           key={key}
-//           topping={t.topping}
-//           selected={t.defaultSelected}
-//           toggleTopping={toggleTopping}
-//         />
-//       ))
-//     }
-//     <button onClick={()=> addToCart({size: size, price: basePrice})}>Add to Cart</button>
-//   </div>
-// )
-
-// export default Pizza
