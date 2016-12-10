@@ -3,6 +3,7 @@ import logo from '../logo.svg'
 import '../App.css'
 import Pizza from './Pizza'
 import OrderTotal from './OrderTotal'
+import Cart from './Cart'
 
 import { connect } from 'react-redux'
 import { fetchPizza } from '../actions/pizzaActions'
@@ -36,7 +37,7 @@ class App extends Component {
     }, 0)
     this.setState({
       cart: newCart,
-      total: newTotal,
+      total: newTotal.toFixed(2),
     })
     //Redux code I could not get working
     //this.props.dispatch(addToCart(pizza))
@@ -74,6 +75,9 @@ class App extends Component {
             addToCart={this.addToCart}
           />
         }
+        <Cart 
+          pizzas={this.state.cart}
+        />
       </div>
     )
   }

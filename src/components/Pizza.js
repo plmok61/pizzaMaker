@@ -6,9 +6,9 @@ export default class Pizza extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      toppings: this.props.toppings,
+      toppings: [],
       toppingsCount: 0,
-      maxToppings: this.props.maxToppings,
+      maxToppings: 0,
       pizzaTotal: 0,
     }
     this.countToppings = this.countToppings.bind(this)
@@ -16,7 +16,12 @@ export default class Pizza extends Component {
     this.calcPizzaPrice = this.calcPizzaPrice.bind(this)
   }
 
-  componentDidMount () {
+  componentWillReceiveProps () {
+    this.setState({
+      toppings: this.props.toppings,
+      maxToppings: this.props.maxToppings
+    })
+
     this.calcPizzaPrice(this.props.toppings)
 
     // Set initial topping count
@@ -98,7 +103,7 @@ export default class Pizza extends Component {
             />
           ))
         }
-        <button onClick={()=> addToCart({size: size, price: basePrice})}>Add to Cart</button>
+        <button onClick={()=> addToCart({size: size, price: basePrice, toppings: this.state.toppings})}>Add to Cart</button>
       </div>
     )
   }
